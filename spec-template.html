@@ -1,0 +1,839 @@
+<!--
+Copyright 2017 Tilman Ginzel, AOE GmbH
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+	<style>
+            #mainContainer {
+                font-family: Helvetica, Arial, sans-serif;
+                width: 800px;
+                padding-top: 3px;
+                margin: auto;
+                margin-top: 20px;
+                font-size: 14px;
+                font-family: Helvetica;
+                background: rgb(53, 60, 70);
+                border-radius: 6px
+        }
+        html {
+            background-image: url(http://blog.hostbaby.com/wp-content/uploads/2013/07/scuffedstatic_blue_1920x1234.jpg);
+        }
+        
+        hr {
+            border-color: #72a9ce;
+            border-radius: 7px;
+            height: 1px;
+            background-color: #36a2eb;
+        }
+        
+        h1 {
+            font-weight: 300;
+            margin: 24px 0px 8px 0px;
+            font-size: 32px;
+            word-wrap: break-word;
+        }
+        
+        h2 {
+            margin-top: 12px;
+            margin-left: 10px;
+            margin-right: 10px;
+            font-size: 22px;
+            font-weight: 300;
+            font-style: italic;
+            border-radius: 6px;
+            text-align: center;
+            color: #fafafa;
+
+        }
+        
+        h3 {
+            
+            font-size: 22px;
+            font-weight: 300;
+            font-style: italic;
+            margin-top: 24px;
+            margin-bottom: 4px;
+            color: white;
+            margin-left: 14px;
+        }
+        
+        p {
+            margin: 0;
+        }
+        
+        /* table {
+            width: 100%;
+        } */
+        
+        th {
+            background: #c0d8e8;
+            padding: 6px;
+            border-radius: 16px;
+            border: 2px solid #171a21;
+            text-align: center;
+            font-style: italic
+        }
+        
+        td {
+            padding: 6px;
+            background-color: #FAFAFA;
+            font-size: 13px;
+            line-height: 15px;
+            max-width: 500px;
+            word-wrap: break-word;
+        }
+        
+        tr.error td, td.error {
+            background-color: #FFC107 !important;
+        }
+        
+        tr.failure td, td.failure {
+            color: #E53935;
+        }
+        
+        td.error, td.failure {
+            font-weight: bold;
+        }
+        
+        td.passed {
+            color: #2E7D32;
+        }
+        
+        div.footer {
+            /* margin: 24px 0px 24px 0px; */
+            /* padding-top: 24px; */
+            /* border-top: 1px solid #DDDDDD; */
+            text-align: center;
+            font-size: 13px;
+            margin-top: 10px;
+            padding-bottom:10px;
+            color: white;
+        }
+            /* margin-left: 10px; */
+            /* margin-right: 10px;
+        }
+        
+        span.date-test-ran {
+            font-size: 13px;
+        }
+        
+        ul {
+            list-style-type: square;
+        }
+        
+        li {
+            margin: 3px 0px 3px 0px;
+        }
+        
+        /* h3 {
+            margin-top: 48px;
+        } */
+        
+        p {
+            margin: 0;
+        }
+        
+        p.date-test-ran {
+            font-size: small;
+            font-style: italic;
+            color: white;
+            margin-left: 14px;
+            margin-bottom: 10px;
+        }
+        
+        table.features-table {
+            width: 800px;
+            table-layout: fixed;
+        }
+        
+        table.summary-table {
+            width: 780px;
+            text-align: left;
+            font-weight: bold;
+            font-size: small;
+            border-radius: 6px;
+            margin-right: 10px;
+            margin-left: 10px;
+            margin-right: 10px;
+           
+        }
+        
+        table.summary-table th {
+            background: #c0d8e8;
+            padding: 6px;
+            border-radius: 16px;
+            border: 2px solid #171a21;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        table.summary-table td {
+            background: #5b6777;
+            padding: 6px;
+            border-radius: 16px;
+            border: 2px solid #313a38;
+            border: 2px solid #353c46;
+            color: #fdfdfd;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        pre {
+            line-height: 1em;
+            white-space: pre-wrap;
+            color: antiquewhite;    
+        }
+        
+        pre.code {
+            overflow-y: scroll;
+            white-space: pre;
+        }
+        
+        pre.stacktrace {
+            line-height: 0.8em;
+            overflow-y: scroll;
+            white-space: pre;
+        }
+        
+        pre.narrative {
+            font-family: inherit;
+            font-size: 16px;
+            line-height: 20px;
+            color: #444;
+            margin-top: 4px;
+        }
+        
+        h4.spec-title {
+            margin-bottom: 8px;
+        }
+        
+        .margin-bottom-16 {
+            margin-bottom: 16px;
+        }
+        
+        .feature-description {
+            font-size: large;
+            background: lightblue;
+            padding: 4px;
+        }
+        
+        .feature-toc-error {
+            color: #F89A4F;
+        }
+        
+        .feature-toc-failure {
+            color: #FF8080;
+        }
+        
+        .feature-toc-ignored {
+            color: lightgray;
+        }
+        
+        .feature-toc-pass {
+            color: green;
+        }
+        
+        .feature-description.error {
+            background: #F89A4F;
+        }
+        
+        .feature-description.failure {
+            background: #FF8080;
+        }
+        
+        .feature-description.ignored {
+            background: lightgray;
+        }
+        
+        .feature-description.ignored .reason {
+            color: black;
+            font-style: italic;
+            font-size: small;
+        }
+        
+        div.issues {
+            color: black;
+            font-weight: bold;
+            font-size: small;
+        }
+        
+        div.problem-description {
+            padding: 10px;
+            background: #5a687b;
+            border-radius: 10px;
+            border: 2px solid #939fb1;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        
+        div.problem-header {
+            font-weight: bold;
+            color: #f9f9f9; 
+        }
+        
+        div.problem-list {
+        
+        }
+        
+        table.ex-table th {
+            background: lightblue;
+            padding: 0px 5px 0px 5px;
+        }
+        
+        table.ex-table td {
+            background: #E0E0E0;
+            padding: 0px 5px 0px 5px;
+        }
+        
+        table td {
+            min-width: 50px;
+            background-color: #353c46;
+        }
+        
+        col.block-kind-col {
+            width: 70px;
+        }
+        
+        span.spec-header {
+            font-weight: bold;
+        }
+        
+        span.back-to-top {
+            float: right;
+            font-size: 60%;
+        }
+        
+        div.spec-text {
+            /*color: green;*/
+        }
+        
+        p.spec-status {
+            font-style: italic;
+        }
+        
+        .ignored {
+            color: gray;
+        }
+        
+        td.ex-result {
+            text-align: center;
+            background: white !important;
+        }
+        
+        .ex-pass {
+            color: darkgreen;
+        }
+        
+        .ex-fail {
+            color: red;
+            font-weight: bold;
+        }
+        
+        td.block-kind {
+            margin: 2px;
+            font-style: italic;
+        }
+        
+        td.block-text {
+            width: 100%;
+        }
+        
+        td.block-text > p {
+            margin-top: 5px;
+        }
+        
+        div.footer {
+            text-align: center;
+            font-size: small;
+        }
+        
+        div.geb-artifacts {
+            font-size: 13px;
+            width: 100%;
+            margin-top: 12px;
+        }
+        
+        div.geb-artifacts table {
+            text-align: left;
+            width: 773px;
+            border-radius: 6px;
+            margin-left: 14px;
+            margin-right: 20px;
+        }
+        
+        tr.geb-failure {
+            background-color: #FF8080;
+        }
+        
+        /* toggle stacktrace div */
+        input.toggle-stacktrace-checkbox {
+            display: none;
+        }
+        
+        input.toggle-stacktrace-checkbox:checked + label + div {
+            display: none;
+        }
+        
+        input.toggle-stacktrace-checkbox + label:before {
+            content: "Hide "
+        }
+        
+        input.toggle-stacktrace-checkbox:checked + label:before {
+            content:" Show "
+        }
+        .geb-artifacts td {
+            background: #5b6777;
+            padding: 6px;
+            border-radius: 16px;
+            border: 2px solid #313a38;
+            border: 2px solid #353c46;
+            color: #fdfdfd;
+            text-align: center;
+            font-style: italic;
+        }
+        label.toggle-stacktrace-label {
+            border-radius: 4px;
+            border: 1px solid #c0d8e8;
+            font-size: 10px;
+            display: inline-block;
+            padding: 2px 5px;
+            cursor: pointer;
+            color: #f9f9f9;
+        }
+        a {
+            color: white;
+        }
+        #wrapper1,#wrapper2 {
+            width: 400px;
+            height: 400px;
+        }
+            .wrapper{
+            float: left;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        /* #wrapper1,#wrapper1{
+            float: left;
+        } */
+        
+            </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <%
+    String ImAJavaVariable = "Bob";
+  %>
+  
+    <script language="javascript">
+        
+            window.onload = function() {
+                
+                var ImAJavascriptVariable = '<%=ImAJavaVariable%>';
+                var passCount = document.getElementById('p').value;
+                var failCount = document.getElementById('f').value;
+                var errorCount = document.getElementById('e').value;
+                new Chart(document.getElementById("pie-chart"), {
+        type: 'pie',
+        data: {
+          labels: ["Pass", "Failure", "Error"],
+          datasets: [{
+            label: "Population (millions)",
+            backgroundColor: ["#51af51", "#f1422f","#F8ED08"],
+            data: [passCount,failCount,errorCount],
+            borderColor:'#939fb1',
+          }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Chart 1',
+            fontColor: 'white'
+          },
+          legend: {
+            display: true, 
+            labels: {
+                fontColor: 'white'
+            }
+        },
+        }
+    });
+
+    new Chart(document.getElementById("doughnut-chart"), {
+        type: 'doughnut',
+        data: {
+          labels: ["Pass", "Failure", "Error"],
+          datasets: [{
+            label: "Population (millions)",
+            backgroundColor: ["#36a2eb", "#ff6384","#F8ED08"],
+            data: [passCount,failCount,errorCount],
+            borderColor:'#939fb1'
+          }]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Chart 2',
+            fontColor: 'white'
+          },
+          legend:{
+              display:true,
+              labels: {
+                fontColor: 'white'
+            }
+          }
+          
+        }
+    });
+
+    
+    }
+                </script>
+</head>
+<body id="top">
+<div id= "mainContainer"> 
+        
+        
+<%
+def stats = utils.stats( data )
+def gebUtils = new com.aoe.gebspockreports.GebReportUtils()
+def gebReport = gebUtils.readGebReport()
+def specReport = gebReport.findSpecByLabel(utils.getSpecClassName(data))
+
+def writeIssuesOrSees = { issues, description ->
+if ( issues?.value() ) { %>
+<div class="issues">
+    <div>$description</div>
+    <ul> <%
+        issues.value().each { issue ->
+        %>
+        <li>
+            <% if (utils.isUrl(issue)) { %>
+            <a href="$issue">$issue</a>
+            <% } else { out << issue } %>
+        </li> <%
+        } %>
+    </ul>
+</div> <%
+}
+}
+
+def writeStackTrace = { error, index, featureName ->
+    def uniqueId = "${featureName.hashCode()}-${index}" %>
+    <pre>$error</pre>
+    <input type="checkbox" id="toggle-stacktrace-checkbox-$uniqueId" class="toggle-stacktrace-checkbox" checked />
+    <label for="toggle-stacktrace-checkbox-$uniqueId" class="toggle-stacktrace-label" >Stacktrace</label>
+    <div>
+        <pre class="stacktrace"><% error.getStackTrace().each { stackTraceElement -> %>
+$stackTraceElement
+        <% } %>
+        </pre>
+    </div>
+<% } %>
+<%
+        String a = utils.getSpecClassName(data);
+		String[] b = a.split("\\.");
+		def repName = b[b.length-1];
+%>
+<h2>Report for ${repName}</h2>
+<hr>
+
+<%
+// spec title and narrative
+def specTitle = utils.specAnnotation(data, spock.lang.Title)?.value() ?: ''
+def narrative = (data.info.narrative ?: '')
+
+if (specTitle) { %> <h4 class="spec-title">$specTitle</h4> <% }
+if (narrative) { %> <pre class="narrative">$narrative</pre> <% }
+
+// issues/see annotations
+writeIssuesOrSees(utils.specAnnotation(data, spock.lang.Issue), 'Issues')
+writeIssuesOrSees(utils.specAnnotation(data, spock.lang.See), 'See')
+%>
+
+<div class="summary-report">
+    <h3>Summary:</h3>
+    <p class="date-test-ran">Created on ${new Date()} by ${System.properties['user.name']}</p>
+          <% features.eachFeature { name, result, blocks, iterations, params -> 
+		      def count=iterations.size()
+              def failure = iterations.findAll { it.failures || it.errors }.size()
+              
+              def passed = iterations.size() - failure
+			  def success=passed/count*100
+			  def errors1 =  iterations.findAll {it.errors }.size()
+			  def errors = failure - errors1
+			  
+          %>
+          <input type="hidden" id="p" value="${passed}">
+          <input type="hidden" id="f" value="${failure}">
+          <input type="hidden" id="e" value="${errors}">
+    <table class="summary-table">
+
+        <thead>
+        <tr>
+            <th>Executed features</th>
+			<th>Passed</th>
+            <th>Failures</th>
+			<th>Errors</th>
+            <th>Success rate</th>
+            <th>Time</th>
+			
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>$count</td>
+			<td>$passed</td>
+            <td>$failure</td>
+			<td>$errors</td>
+            <td>$success%</td>
+            <td>${fmt.toTimeDuration(stats.time)}</td>
+			
+        </tr>
+        </tbody>
+    </table>
+	<% } %>
+</div>
+<div class="wrapper" id="wrapper1">
+    <canvas id="pie-chart" style="width:400px;height:400px;"></canvas>
+</div>
+<div class="wrapper" id="wrapper2">
+    <canvas id="doughnut-chart" style="width:400px;height:400px;"></canvas>
+</div>
+<!--
+<h3>Features:</h3>
+<ul id="toc">
+    <% features.eachFeature { name, result, blocks, iterations, params ->
+    def classSuffix = result.toLowerCase()
+    classSuffix = classSuffix.startsWith('fail') ? 'failure' : classSuffix
+    %>
+    <li><a href="#${name.hashCode()}" class="feature-toc-$classSuffix">$name</a></li>
+    <% } %>
+</ul>
+-->
+<table class="features-table">
+    <colgroup>
+        <col class="block-kind-col" />
+        <col class="block-text-col" />
+    </colgroup>
+    <tbody>
+    <%
+    def featureCount = 0
+    features.eachFeature { name, result, blocks, iterations, params ->
+    def failedIterations = iterations.findAll { it.dataValues || it.errors }
+    def problems = iterations.findAll { it.errors }
+    def isFailure = result in ['FAIL', 'FAILURE']
+    def isError = result == 'ERROR'
+    def isIgnored = result == 'IGNORED'
+    def cssClass = isIgnored ? 'ignored' : (isError ? 'error' : (isFailure ? 'failure' : ''))
+	 def failureCondt = iterations.findAll { it.failures || it.errors }.size()
+
+    featureCount += isIgnored ? 0 : 1
+    def gebFeatureReport = specReport?.findFeatureByNumberAndName(featureCount, name)
+    def gebArtifacts = gebFeatureReport?.artifacts
+    %>
+    <!-- print feature title and issues/see annotations-->
+    <tr>
+        <td colspan="10">
+            <div>
+			<% if(failureCondt>0){ %>
+			
+			<h3> Problem Description: </h3>
+             <%}%>
+			 <!--<span>$name</span>
+                <span class="back-to-top"><a href="#top">To top</a></span>-->
+                <%
+                def ignoreReason = description.getAnnotation(spock.lang.Ignore)?.value()
+                if (ignoreReason) {
+                %> <div><span class="reason">$ignoreReason</span></div>  <%
+                }
+                writeIssuesOrSees(description.getAnnotation(spock.lang.Issue), 'Issues')
+                writeIssuesOrSees(description.getAnnotation(spock.lang.See), 'See')
+                %>
+            </div>
+        </td>
+    </tr>
+
+    <!-- print given, when, then, ... blocks -->
+    <% blocks.forEach { block -> %>
+    <tr class="${isIgnored ? 'ignored' : ''}">
+        <td class="block-kind" colspan="1">
+            <p>$block.kind</p>
+        </td>
+        <td class="block-text" colspan="9">
+            <p>$block.text</p>
+            <% if (block.sourceCode) {
+                %><pre class="code"><%
+                block.sourceCode.each { out << it << System.getProperty("line.separator") }
+                %></pre><%
+            }
+            %>
+        </td>
+    </tr>
+    <% } %>
+
+	
+    <!-- print data tables if feature failed -->
+	<!--
+    <%
+    if (failureCondt>0) {
+    %>
+    <tr>
+        <td colspan="1">Params:</td>
+        <td colspan="7">
+            <div class="spec-examples">
+                <table class="ex-table">
+                    <thead>
+                    <tr>
+                        <% params.forEach { param -> %> <th class="ex-header">$param</th> <% }%>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% failedIterations.forEach { iteration -> %>
+                    <tr class="ex-${iteration.errors ? 'fail' : 'pass'}">
+                        <% iteration.dataValues.each { dataValue -> %>
+                        <td class="ex-value">$dataValue</td>
+                        <% } %>
+                        <td class="ex-result">${iteration.errors ? 'FAIL' : 'OK'}</td>
+                    </tr>
+                    <% }%>
+                    </tbody>
+                </table>
+            </div>
+        </td>
+	
+        <%
+        def failCount = iterations.findAll { it.failures || it.errors }.size()
+        def passedCount = iterations.size() - failCount
+        %>
+		<!--	
+        <td colspan="2">
+            <p class="spec-status">$passedCount/${iterations.size()} passed</p>
+        </td>
+    </tr>
+    <% } %>
+	-->
+  
+    <!-- print geb artifacts-->
+    <!-- print problems -->
+    <%
+    if (problems) {
+    %>
+    <tr>
+        <td colspan="10">
+            <div class="problem-description">
+                <div class="problem-header">The following problems occurred:</div>
+                <div class="problem-list">
+                    <ul>
+                        <% problems.eachWithIndex { problem, index ->
+                            if (problem.dataValues) { %>
+                                <!-- <li>Input: $problem.dataValues</li>-->
+                                <ul class="margin-bottom-16">
+                                    <% problem.errors.each { error ->  %>
+                                    <li>
+                                        <% writeStackTrace(error, index, name) %>
+                                    </li>
+                                    <% } %>
+                                </ul>
+                            <% } else {
+                                problems.errors.forEach { error -> %>
+                                <li><% writeStackTrace(error[0], index, name) %></li>
+                            <% }
+                            }
+                        } %>
+                    </ul>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <% }
+    gebFeatureReport?.addedToReport = true
+    } %>
+    </tbody>
+</table>
+
+<%
+features.eachFeature { name, result, blocks, iterations, params ->
+def failureCondt1 = iterations.findAll { it.failures || it.errors }.size()
+if (failureCondt1>0) {
+%>
+
+<h3>ScreenShots:</h3>
+<div class="geb-artifacts">
+    <table>
+        <thead>
+        <tr>
+            <th>Label</th>
+            <th>Image</th>
+        </tr>
+        </thead>
+		<%def gebFeatureReport1 = specReport?.findFeatureByNumberAndName(featureCount, name)
+					def gebArtifacts1 = gebFeatureReport1?.artifacts%>
+		
+                    <% if (gebArtifacts1) { %>
+                        <% gebArtifacts1.sort { it.number }.each { artifact ->
+                            def label = artifact.label?.replaceFirst(name+"-", '')
+                            def trCssClass = label == 'failure' ? 'geb-failure' : ''
+                            def imageFile = "./" + artifact.files.find { it.endsWith('png') }   
+                           def imgArray = imageFile.split('\\\\');
+                            def imgName = "./"+imgArray[imgArray.length-1]		
+                    
+            %>
+
+        
+		
+		 <tbody>
+                    
+                    <tr >
+                        <td>Error Screenshot</td>
+                        <td><a href="$imgName">Click Me</a></td>
+                    </tr>
+                    <%
+                    } %>
+                    </tbody>
+					<%
+                    } %>
+		<%def unassignedArtifacts = specReport?.getUnassignedGebArtifacts()
+		if(unassignedArtifacts){
+		%>
+        <tbody>
+                <% unassignedArtifacts.forEach { artifact ->
+                    def label = artifact.label
+                     def imageFile = "./" + artifact.files.find { it.endsWith('png') }   
+                                    def imgArray = imageFile.split('\\\\');
+                                    def imgName = "./"+imgArray[imgArray.length-1]		
+            
+                    %>
+        <tr>
+            <td>Error Screenshot</td>
+            <td><a href="$imgName">Click Me</a></td>
+        </tr>
+		<% } %>
+        </tbody>
+		 <%
+        } %>
+    </table>
+</div>
+<% } %>
+<% } %>
+
+<hr>
+<div class="footer">
+    Generated by <a href="https://github.com/renatoathaydes/spock-reports">Athaydes Spock Reports.</a>.
+    Modifications by <a href="https://github.com/AOEpeople/geb-spock-reports">geb-spock-reports</a>.
+</div>
+</div>
+</body>
+</html>

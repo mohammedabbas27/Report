@@ -1,0 +1,271 @@
+/**
+ * Copyright 2017 Tilman Ginzel, AOE GmbH
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * ---
+ *
+ * Parts of this file are copied from spock-reports by Renato Athaydes, licensed under ASF2 license:
+ * https://github.com/renatoathaydes/spock-reports/blob/master/src/main/resources/spock-feature-report.css
+ */
+
+body {
+    font-family: Helvetica;
+    width: 800px;
+}
+
+h3 {
+    margin-top: 48px;
+}
+
+p {
+    margin: 0
+}
+
+table {
+    margin: 5px;
+}
+
+p.date-test-ran {
+    font-size: small;
+    font-style: italic;
+}
+
+table.features-table {
+    width: 800px;
+    table-layout: fixed;
+}
+
+table.summary-table {
+    width: 800px;
+    text-align: left;
+    font-weight: bold;
+    font-size: small;
+}
+
+table.summary-table th {
+    background: lightblue;
+    padding: 6px;
+}
+
+table.summary-table td {
+    background: #E0E0E0;
+    padding: 6px;
+}
+
+pre {
+    line-height: 1em;
+    white-space: pre-wrap;
+}
+
+pre.code {
+    overflow-y: scroll;
+    white-space: pre;
+}
+
+pre.stacktrace {
+    line-height: 0.8em;
+    overflow-y: scroll;
+    white-space: pre;
+}
+
+pre.narrative {
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 20px;
+    color: #444;
+    margin-top: 4px;
+}
+
+h4.spec-title {
+    margin-bottom: 8px;
+}
+
+.margin-bottom-16 {
+    margin-bottom: 16px;
+}
+
+.feature-description {
+    font-size: large;
+    background: lightblue;
+    padding: 4px;
+}
+
+.feature-toc-error {
+    color: #F89A4F;
+}
+
+.feature-toc-failure {
+    color: #FF8080;
+}
+
+.feature-toc-ignored {
+    color: lightgray;
+}
+
+.feature-toc-pass {
+    color: green;
+}
+
+.feature-description.error {
+    background: #F89A4F;
+}
+
+.feature-description.failure {
+    background: #FF8080;
+}
+
+.feature-description.ignored {
+    background: lightgray;
+}
+
+.feature-description.ignored .reason {
+    color: black;
+    font-style: italic;
+    font-size: small;
+}
+
+div.issues {
+    color: black;
+    font-weight: bold;
+    font-size: small;
+}
+
+div.problem-description {
+    padding: 10px;
+    background: pink;
+    border-radius: 10px;
+}
+
+div.problem-header {
+    font-weight: bold;
+    color: red;
+}
+
+div.problem-list {
+
+}
+
+table.ex-table th {
+    background: lightblue;
+    padding: 0px 5px 0px 5px;
+}
+
+table.ex-table td {
+    background: #E0E0E0;
+    padding: 0px 5px 0px 5px;
+}
+
+table td {
+    min-width: 50px;
+}
+
+col.block-kind-col {
+    width: 70px;
+}
+
+span.spec-header {
+    font-weight: bold;
+}
+
+span.back-to-top {
+    float: right;
+    font-size: 60%;
+}
+
+div.spec-text {
+    /*color: green;*/
+}
+
+p.spec-status {
+    font-style: italic;
+}
+
+.ignored {
+    color: gray;
+}
+
+td.ex-result {
+    text-align: center;
+    background: white !important;
+}
+
+.ex-pass {
+    color: darkgreen;
+}
+
+.ex-fail {
+    color: red;
+    font-weight: bold;
+}
+
+td.block-kind {
+    margin: 2px;
+    font-style: italic;
+}
+
+td.block-text {
+    width: 100%;
+}
+
+td.block-text > p {
+    margin-top: 5px;
+}
+
+div.footer {
+    text-align: center;
+    font-size: small;
+}
+
+div.geb-artifacts {
+    font-size: 13px;
+    width: 100%;
+    margin-top: 12px;
+}
+
+div.geb-artifacts table {
+    text-align: left;
+    width: 100%;
+    border: 1px solid lightgray;
+    margin: 0;
+}
+
+tr.geb-failure {
+    background-color: #FF8080;
+}
+
+/* toggle stacktrace div */
+input.toggle-stacktrace-checkbox {
+    display: none;
+}
+
+input.toggle-stacktrace-checkbox:checked + label + div {
+    display: none;
+}
+
+input.toggle-stacktrace-checkbox + label:before {
+    content: "Hide "
+}
+
+input.toggle-stacktrace-checkbox:checked + label:before {
+    content:" Show "
+}
+
+label.toggle-stacktrace-label {
+    border-radius: 4px;
+    border: 1px solid black;
+    font-size: 10px;
+    display: inline-block;
+    padding: 2px 5px;
+    cursor: pointer;
+}
