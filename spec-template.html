@@ -283,7 +283,8 @@ limitations under the License.
         
         div.problem-header {
             font-weight: bold;
-            color: #f9f9f9; 
+            color: #ffebd1;
+            font-size: 15px;
         }
         
         div.problem-list {
@@ -396,6 +397,25 @@ limitations under the License.
         input.toggle-stacktrace-checkbox:checked + label:before {
             content:" Show "
         }
+
+
+        /* ------------------------ */
+        input.toggle1-stacktrace1-checkbox1 {
+            display: none;
+        }
+        
+        input.toggle1-stacktrace1-checkbox1:checked + label + div {
+            display: none;
+        }
+        
+        input.toggle1-stacktrace1-checkbox1 + label:before {
+            content: "Hide "
+        }
+        
+        input.toggle1-stacktrace1-checkbox1:checked + label:before {
+            content:" Show "
+        }
+        /* ----------------------------- */
         .geb-artifacts td {
             background: #5b6777;
             padding: 6px;
@@ -406,7 +426,7 @@ limitations under the License.
             text-align: center;
             font-style: italic;
         }
-        label.toggle-stacktrace-label {
+        label.toggle-stacktrace-label, label.toggle1-stacktrace1-label1 {
             border-radius: 4px;
             border: 1px solid #c0d8e8;
             font-size: 10px;
@@ -419,8 +439,13 @@ limitations under the License.
             color: white;
         }
         #wrapper1,#wrapper2 {
-            width: 400px;
-            height: 400px;
+            width: 250px;
+            height: 250px;
+        }
+        div#wrapper3 {
+            width: 250px;
+            height: 200px;
+            padding-top: 10px;
         }
             .wrapper{
             float: left;
@@ -430,17 +455,49 @@ limitations under the License.
         /* #wrapper1,#wrapper1{
             float: left;
         } */
+        h2.narrative {
+            text-align: left;
+            font-size: 14px;
+            border-radius: 6px;
+            border-color: #dad7d7;
+            background-color: #5b6777;
+            padding: 8px;
+        }
+        li {
+            color: #ffebd1;
+            font-weight: bold;
+        }
+        #chart3 {
+            height: 250px;
+            width:250px;
+        }
         
             </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <%
     String ImAJavaVariable = "Bob";
   %>
   
     <script language="javascript">
-        
+            window.addEventListener("load",function(){
+                console.log("The code is reaching here")
+                var a = document.querySelector('h2').innerText;
+                a = a.split(' ');
+                var reportName = a[2];
+                var arr = [];
+                var arr1= [];
+                for(var i =0;i < reportName.length;i++){
+                if(reportName[i] == reportName[i].toUpperCase())
+                arr.push(i)
+            }
+                for(var i =0;i<arr.length;i++){
+                arr1.push(reportName.slice(arr[i],arr[i+1]))
+            }
+                reportName = a[0]+ " "+a[1]+" "+arr1.join(" ");
+                document.querySelector('h2').innerText = reportName;
+            });   
             window.onload = function() {
-                
                 var ImAJavascriptVariable = '<%=ImAJavaVariable%>';
                 var passCount = document.getElementById('p').value;
                 var failCount = document.getElementById('f').value;
@@ -451,14 +508,14 @@ limitations under the License.
           labels: ["Pass", "Failure", "Error"],
           datasets: [{
             label: "Population (millions)",
-            backgroundColor: ["#51af51", "#f1422f","#F8ED08"],
+            backgroundColor: ["#00e396", "#ff4560","#F8ED08"],
             data: [passCount,failCount,errorCount],
-            borderColor:'#939fb1',
+            borderColor:'#000000',
           }]
         },
         options: {
           title: {
-            display: true,
+            display: false,
             text: 'Chart 1',
             fontColor: 'white'
           },
@@ -477,14 +534,14 @@ limitations under the License.
           labels: ["Pass", "Failure", "Error"],
           datasets: [{
             label: "Population (millions)",
-            backgroundColor: ["#36a2eb", "#ff6384","#F8ED08"],
+            backgroundColor: ["#008ffb", "#ff6384","#F8ED08"],
             data: [passCount,failCount,errorCount],
-            borderColor:'#939fb1'
+            borderColor:'#000000'
           }]
         },
         options: {
           title: {
-            display: true,
+            display: false,
             text: 'Chart 2',
             fontColor: 'white'
           },
@@ -500,6 +557,7 @@ limitations under the License.
 
     
     }
+    
                 </script>
 </head>
 <body id="top">
@@ -530,7 +588,7 @@ if ( issues?.value() ) { %>
 }
 }
 
-def writeStackTrace = { error, index, featureName ->
+def writeStackTrace = { error, index, featureName, problem1 ->
     def uniqueId = "${featureName.hashCode()}-${index}" %>
     <pre>$error</pre>
     <input type="checkbox" id="toggle-stacktrace-checkbox-$uniqueId" class="toggle-stacktrace-checkbox" checked />
@@ -541,37 +599,32 @@ $stackTraceElement
         <% } %>
         </pre>
     </div>
+    <input type="checkbox" id="toggle1-stacktrace1-checkbox1-$uniqueId" class="toggle1-stacktrace1-checkbox1" checked />
+    <label for="toggle1-stacktrace1-checkbox1-$uniqueId" class="toggle1-stacktrace1-label1" >Data Values</label>
+    <div>
+        <pre class="stacktrace1"> ${problem1.dataValues}
+        </pre>
+    </div>
 <% } %>
 <%
         String a = utils.getSpecClassName(data);
 		String[] b = a.split("\\.");
 		def repName = b[b.length-1];
 %>
-<h2>Report for ${repName}</h2>
+<h2>Report For ${repName}</h2>
 <hr>
-
-<%
-// spec title and narrative
-def specTitle = utils.specAnnotation(data, spock.lang.Title)?.value() ?: ''
-def narrative = (data.info.narrative ?: '')
-
-if (specTitle) { %> <h4 class="spec-title">$specTitle</h4> <% }
-if (narrative) { %> <pre class="narrative">$narrative</pre> <% }
-
-// issues/see annotations
-writeIssuesOrSees(utils.specAnnotation(data, spock.lang.Issue), 'Issues')
-writeIssuesOrSees(utils.specAnnotation(data, spock.lang.See), 'See')
-%>
+<input type="hidden" id="reptt" onload="reportChange()">
 
 <div class="summary-report">
     <h3>Summary:</h3>
     <p class="date-test-ran">Created on ${new Date()} by ${System.properties['user.name']}</p>
           <% features.eachFeature { name, result, blocks, iterations, params -> 
-		      def count=iterations.size()
+              def count=iterations.size()   
               def failure = iterations.findAll { it.failures || it.errors }.size()
               
               def passed = iterations.size() - failure
-			  def success=passed/count*100
+              def successCalc=(passed/(count * 1.0)) * 100
+              int success = (int)Math.round(successCalc)
 			  def errors1 =  iterations.findAll {it.errors }.size()
 			  def errors = failure - errors1
 			  
@@ -579,6 +632,7 @@ writeIssuesOrSees(utils.specAnnotation(data, spock.lang.See), 'See')
           <input type="hidden" id="p" value="${passed}">
           <input type="hidden" id="f" value="${failure}">
           <input type="hidden" id="e" value="${errors}">
+          <input type="hidden" id="perc" value="${success}">
     <table class="summary-table">
 
         <thead>
@@ -606,12 +660,85 @@ writeIssuesOrSees(utils.specAnnotation(data, spock.lang.See), 'See')
     </table>
 	<% } %>
 </div>
+<%
+// spec title and narrative
+def specTitle = utils.specAnnotation(data, spock.lang.Title)?.value() ?: ''
+def narrative = (data.info.narrative ?: '')
+
+if (specTitle) { %> <h4 class="spec-title">$specTitle</h4> <% }
+if (narrative) { %> <h3>Test Cases Description:</h3><h2 class="narrative"><pre>$narrative</pre></h2> <% }
+
+// issues/see annotations
+writeIssuesOrSees(utils.specAnnotation(data, spock.lang.Issue), 'Issues')
+writeIssuesOrSees(utils.specAnnotation(data, spock.lang.See), 'See')
+%>
+
 <div class="wrapper" id="wrapper1">
-    <canvas id="pie-chart" style="width:400px;height:400px;"></canvas>
+    <canvas id="pie-chart" style="width:250px;height:250px;"></canvas>
 </div>
 <div class="wrapper" id="wrapper2">
-    <canvas id="doughnut-chart" style="width:400px;height:400px;"></canvas>
+    <canvas id="doughnut-chart" style="width:250px;height:250px;"></canvas>
 </div>
+<div class="wrapper" id="wrapper3">
+    <div id="chart3"></div>
+</div>
+<script>
+    var successPercentage = document.getElementById('perc').value;
+    var options = {
+            chart: {
+                height: 300,
+                 width: 300,
+                type: 'radialBar',
+            },
+            plotOptions: {
+                radialBar: {
+                    startAngle: -135,
+                    endAngle: 135,
+                    dataLabels: {
+                        name: {
+                            fontSize: '13px',
+                            color: '#ffffff',
+                            offsetY: 80
+                        },
+                        value: {
+                            offsetY: 46,
+                            fontSize: '13px',
+                            color: '#ffffff',
+                            formatter: function (val) {
+                                return val + "%";
+                            }
+                        }
+                    }
+                }
+            },
+            fill: {
+            //   colors:'#f31456',
+                gradient: {
+                    enabled: true,
+                    shade: 'dark',
+                    shadeIntensity: 0.15,
+                    inverseColors: false,
+                    
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 50, 65, 99]
+                },
+            },
+            stroke: {
+                dashArray: 4
+            },
+            series: [successPercentage],
+            labels: ['Success Rate'],
+            
+        }
+
+       var chart = new ApexCharts(
+            document.querySelector("#chart3"),
+            options
+        );
+        
+        chart.render();
+</script>
 <!--
 <h3>Features:</h3>
 <ul id="toc">
@@ -684,7 +811,7 @@ writeIssuesOrSees(utils.specAnnotation(data, spock.lang.See), 'See')
     </tr>
     <% } %>
 
-	
+    
     <!-- print data tables if feature failed -->
 	<!--
     <%
@@ -729,6 +856,30 @@ writeIssuesOrSees(utils.specAnnotation(data, spock.lang.See), 'See')
     <!-- print geb artifacts-->
     <!-- print problems -->
     <%
+    int ct1=0
+    int ct2=0   
+    int sz = 0
+    def failure = iterations.findAll { it.failures || it.errors }.size()
+    int [] arrr = new int[failure]
+    int [] dum =  new int[failedIterations.size()]
+    //def failedIterations = iterations.findAll { it.dataValues || it.errors }
+    def z = iterations.findAll { it.errors}.size()
+    failedIterations.forEach { iteration ->
+        value = iteration.errors ? ct1 : 10000
+        dum[ct1] = value
+        ct1=ct1+1
+    }
+    int j=0
+    for(int i=0;dum.length >i;i++){
+        if(dum[i]!=10000){
+            arrr[j] = dum[i]
+            j=j+1
+    }
+    }
+
+
+    %>  
+    <%
     if (problems) {
     %>
     <tr>
@@ -743,7 +894,7 @@ writeIssuesOrSees(utils.specAnnotation(data, spock.lang.See), 'See')
                                 <ul class="margin-bottom-16">
                                     <% problem.errors.each { error ->  %>
                                     <li>
-                                        <% writeStackTrace(error, index, name) %>
+                                        Failed at Test Case :${arrr[index++]+1}<% writeStackTrace(error, index, name, problem) %>
                                     </li>
                                     <% } %>
                                 </ul>
@@ -770,7 +921,7 @@ def failureCondt1 = iterations.findAll { it.failures || it.errors }.size()
 if (failureCondt1>0) {
 %>
 
-<h3>ScreenShots:</h3>
+<h3>Error ScreenShots:</h3>
 <div class="geb-artifacts">
     <table>
         <thead>
@@ -780,7 +931,9 @@ if (failureCondt1>0) {
         </tr>
         </thead>
 		<%def gebFeatureReport1 = specReport?.findFeatureByNumberAndName(featureCount, name)
-					def gebArtifacts1 = gebFeatureReport1?.artifacts%>
+                    def gebArtifacts1 = gebFeatureReport1?.artifacts
+                    int counter =1 
+                    %>
 		
                     <% if (gebArtifacts1) { %>
                         <% gebArtifacts1.sort { it.number }.each { artifact ->
@@ -797,7 +950,7 @@ if (failureCondt1>0) {
 		 <tbody>
                     
                     <tr >
-                        <td>Error Screenshot</td>
+                        <td>Screenshot ${counter++}</td>
                         <td><a href="$imgName">Click Me</a></td>
                     </tr>
                     <%
@@ -817,7 +970,7 @@ if (failureCondt1>0) {
             
                     %>
         <tr>
-            <td>Error Screenshot</td>
+            <td>Screenshot ${counter++}</td>
             <td><a href="$imgName">Click Me</a></td>
         </tr>
 		<% } %>
@@ -832,7 +985,7 @@ if (failureCondt1>0) {
 <hr>
 <div class="footer">
     Generated by <a href="https://github.com/renatoathaydes/spock-reports">Athaydes Spock Reports.</a>.
-    Modifications by <a href="https://github.com/AOEpeople/geb-spock-reports">geb-spock-reports</a>.
+    Modifications by Xmplar Geb-Team.
 </div>
 </div>
 </body>

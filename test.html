@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+    
+        
+
+/* #chart3 {
+  height: 250px;
+  width:250px;
+}
+
+#wrapper3 {
+            width: 256px;
+            height: 250px;
+        }
+            .wrapper{
+            float: right;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        } */
+        #wrapper1,#wrapper2 {
+            width: 225px;
+            height: 225px;
+        }
+        #chart3{
+            height: 250px;
+            width: 250px;
+        }
+            .wrapper{
+            float: left;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+    </style>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script>
+       
+            window.onload = function() {
+                var passCount =1
+                var failCount = 6
+                var errorCount = 0
+                new Chart(document.getElementById("pie-chart"), {
+        type: 'pie',
+        data: {
+          labels: ["Pass", "Failure"],
+          datasets: [{
+            label: "Population (millions)",
+            backgroundColor: ["#00e396", "#ff4560"],
+            data: [passCount,failCount],
+            borderColor:'#000000',
+          }]
+        },
+        options: {
+          title: {
+            display: false,
+            text: 'Chart 1',
+            fontColor: 'black'
+          },
+          legend: {
+            display: true, 
+            labels: {
+                fontColor: 'black'
+            }
+        },
+        }
+    });
+
+    new Chart(document.getElementById("doughnut-chart"), {
+        type: 'doughnut',
+        data: {
+          labels: ["Pass", "Failure"],
+          datasets: [{
+            label: "Population (millions)",
+            backgroundColor: ["#008ffb", "#ff6384"],
+            data: [passCount,failCount],
+            borderColor:'#000000'
+          }]
+        },
+        options: {
+          title: {
+            display: false,
+            text: 'Chart 2',
+            fontColor: 'black'
+          },
+          legend:{
+              display:true,
+              labels: {
+                fontColor: 'black'
+            }
+          }
+          
+        }
+    });
+
+    
+    }
+    
+        </script>
+     
+</head>
+<body>
+    <!-- <div class="wrapper" id="wrapper3">
+        <div id="chart3">
+        </div>
+        </div> -->
+        <div class="wrapper" id="wrapper1">
+                <canvas id="pie-chart" style="width:225px;height:225px;"></canvas>
+            </div>
+            <div class="wrapper" id="wrapper2">
+                <canvas id="doughnut-chart" style="width:225px;height:225px;"></canvas>
+            </div>
+            <div class="wrapper" id="wrapper3">
+                <div id="chart3"></div>
+            </div>
+            <script>
+                var options = {
+                        chart: {
+                            height: 250,
+                             width: 250,
+                            type: 'radialBar',
+                        },
+                        plotOptions: {
+                            radialBar: {
+                                startAngle: -135,
+                                endAngle: 135,
+                                dataLabels: {
+                                    name: {
+                                        fontSize: '13px',
+                                        color: '#000000',
+                                        offsetY: 80
+                                    },
+                                    value: {
+                                        offsetY: 46,
+                                        fontSize: '13px',
+                                        color: '#000000',
+                                        formatter: function (val) {
+                                            return val + "%";
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        fill: {
+                          colors:['#000000','#fff90c'],
+                            gradient: {
+                                enabled: true,
+                                shade: 'dark',
+                                shadeIntensity: 0.15,
+                                inverseColors: false,
+                                
+                                opacityFrom: 1,
+                                opacityTo: 1,
+                                stops: [0, 50, 65, 99]
+                            },
+                        },
+                        stroke: {
+                            dashArray: 4
+                        },
+                        series: [100],
+                        labels: ['Median Ratio'],
+                        
+                    }
+            
+                   var chart = new ApexCharts(
+                        document.querySelector("#chart3"),
+                        options
+                    );
+                    
+                    chart.render();
+            </script>
+       
+</body>
+</html>

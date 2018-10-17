@@ -1,0 +1,31 @@
+if(value!=10000){
+        if(iteration.size() > ct1++)
+        arrr[ct2++] = value
+        }else{
+            ct1++
+        }
+
+
+
+        <%
+    int ct1=0
+    int ct2=0   
+    int sz = 0
+    def failure = iterations.findAll { it.failures || it.errors }.size()
+    int [] arrr = new int[failure]
+    int [] dum =  new int[failedIterations.size()]
+    //def failedIterations = iterations.findAll { it.dataValues || it.errors }
+    def z = iterations.findAll { it.errors}.size()
+    failedIterations.forEach { iteration ->
+        value = iteration.errors ? ct1 : 10000
+        dum[ct1++] = value
+        
+    }
+    for(int i=0;dum.length >i;i++){
+        if(dum[i]!=1000)
+            arrr[i] = dum[i]
+    }
+    %> 
+
+
+    <!-- <% writeStackTrace(error, index, name) %> -->
